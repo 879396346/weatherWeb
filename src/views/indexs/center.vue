@@ -103,7 +103,6 @@ export default {
   },
   created() {
     let name = this.getLevel(this.options.series[0].data[0].value)
-    console.log(name)
     this.options.series[0].data[0].name = name
   },
 

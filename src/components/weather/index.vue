@@ -4,7 +4,7 @@
     <div v-if="weatherData" class="content">
       <i class="qi-100-fill"></i>
       <p>
-        <span class="city">南京</span>
+        <span class="city">{{ city }}</span>
         <span class="weather">{{ weatherData[0].textDay }}</span>
       </p>
       <p>
@@ -32,38 +32,100 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      city: '扬州',
       weatherData: [{
-        tempMax: 0,
+        tempMax: 30,
         textDay: '晴',
         tempMin: 10,
         humidity: 22,
-        uvIndex: 2
+        uvIndex: 2,
       }],
+      latitude: null,
+      longitude: null
     };
   },
   async created() {
-    let geo = ''
-    // 获取经纬度
-    try {
-      const response = await axios.get('https://geoapi.qweather.com/v2/city/lookup?location=nanjing&key=2103eccd75874cf89a6f7e68b76a13f4'); // 替换为真实的API URL和查询参数
-      geo = response.data.location[0].id
+    if (navigator.geolocation) {
       try {
-        const response = await axios.get(`https://devapi.qweather.com/v7/weather/3d?location=${geo}&key=2103eccd75874cf89a6f7e68b76a13f4`); // 替换为真实的API URL和查询参数
-        this.weatherData = response.data.daily;
-        for (const key in response.data.daily) {
-          for (const key1 in this.weatherData[0]) {
-            if (key === key1) {
-              this.weatherData[0][key1] = response.data.daily[key1]
-            }
-          }
-        }
+        await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+              (position) => {
+                this.latitude = position.coords.latitude;
+                this.longitude = position.coords.longitude;
+                resolve();
+              },
+              (error) => {
+                console.error("Error getting location:", error);
+                reject(error);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 50000,
+                maximumAge: 0,
+              }
+          );
+        });
       } catch (error) {
-        console.error('Error fetching weather data:', error);
+        console.error("Promise rejected with", error);
       }
-    } catch (error) {
-      console.error('Error fetching geo data:', error);
+    } else {
+      console.error("Geolocation is not supported by this browser.");
     }
+    // let geo = ''
+    // // 获取经纬度
+    // try {
+    //   const response = await axios.get('https://geoapi.qweather.com/v2/city/lookup?location=yangzhou&key=2103eccd75874cf89a6f7e68b76a13f4'); // 替换为真实的API URL和查询参数
+    //   geo = response.data.location[0].id
+    //   this.city = response.data.location[0].name
+    // } catch (error) {
+    //   console.error('Error fetching geo data:', error);
+    // }
+
+    // try {
+    //   const response = await axios.get(`https://devapi.qweather.com/v7/weather/3d?location=${geo}&key=2103eccd75874cf89a6f7e68b76a13f4`); // 替换为真实的API URL和查询参数
+    //   this.weatherData = response.data.daily;
+    //   for (const key in response.data.daily) {
+    //     for (const key1 in this.weatherData[0]) {
+    //       if (key === key1) {
+    //         this.weatherData[0][key1] = response.data.daily[key1]
+    //       }
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.error('Error fetching weather data:', error);
+    // }
+
   },
+  methods: {
+    async getLocation() {
+      if (navigator.geolocation) {
+        try {
+          await new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                  this.latitude = position.coords.latitude;
+                  this.longitude = position.coords.longitude;
+                  resolve();
+                },
+                (error) => {
+                  console.error("Error getting location:", error);
+                  reject(error);
+                },
+                {
+                  enableHighAccuracy: true,
+                  timeout: 5000,
+                  maximumAge: 0,
+                }
+            );
+          });
+        } catch (error) {
+          console.error("Promise rejected with", error);
+        }
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    },
+  }
 };
 </script>
 
