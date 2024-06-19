@@ -2,7 +2,7 @@
   <div id="weather-app">
     <h1>{{ weatherData[0].tempMax }}°C</h1>
     <div v-if="weatherData" class="content">
-      <i class="qi-100-fill"></i>
+      <i :class="icon"></i>
       <p>
         <span class="city">{{ city }}</span>
         <span class="weather">{{ weatherData[0].textDay }}</span>
@@ -32,6 +32,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      icon: null,
       city: '扬州',
       weatherData: [{
         tempMax: 30,
@@ -60,7 +61,7 @@ export default {
               },
               {
                 enableHighAccuracy: true,
-                timeout: 50000,
+                timeout: 5000,
                 maximumAge: 0,
               }
           );
@@ -71,29 +72,30 @@ export default {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-    // let geo = ''
-    // // 获取经纬度
-    // try {
-    //   const response = await axios.get('https://geoapi.qweather.com/v2/city/lookup?location=yangzhou&key=2103eccd75874cf89a6f7e68b76a13f4'); // 替换为真实的API URL和查询参数
-    //   geo = response.data.location[0].id
-    //   this.city = response.data.location[0].name
-    // } catch (error) {
-    //   console.error('Error fetching geo data:', error);
-    // }
+    let geo = ''
+    // 获取经城市
+    try {
+      const response = await axios.get(`https://geoapi.qweather.com/v2/city/lookup?location=${this.longitude + ',' + this.latitude}&key=2103eccd75874cf89a6f7e68b76a13f4`); // 替换为真实的API URL和查询参数
+      geo = response.data.location[0].id
+      this.city = response.data.location[0].name
+    } catch (error) {
+      console.error('Error fetching geo data:', error);
+    }
 
-    // try {
-    //   const response = await axios.get(`https://devapi.qweather.com/v7/weather/3d?location=${geo}&key=2103eccd75874cf89a6f7e68b76a13f4`); // 替换为真实的API URL和查询参数
-    //   this.weatherData = response.data.daily;
-    //   for (const key in response.data.daily) {
-    //     for (const key1 in this.weatherData[0]) {
-    //       if (key === key1) {
-    //         this.weatherData[0][key1] = response.data.daily[key1]
-    //       }
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.error('Error fetching weather data:', error);
-    // }
+    try {
+      const response = await axios.get(`https://devapi.qweather.com/v7/weather/3d?location=${geo}&key=2103eccd75874cf89a6f7e68b76a13f4`); // 替换为真实的API URL和查询参数
+      this.weatherData = response.data.daily;
+      this.icon = 'qi-' + response.data.daily[0].iconDay
+      for (const key in response.data.daily) {
+        for (const key1 in this.weatherData[0]) {
+          if (key === key1) {
+            this.weatherData[0][key1] = response.data.daily[key1]
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
 
   },
   methods: {
