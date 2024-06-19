@@ -32,7 +32,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      icon: null,
+      icon: 'qi-100',
       city: '扬州',
       weatherData: [{
         tempMax: 30,
