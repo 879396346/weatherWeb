@@ -24,7 +24,7 @@
 <!--      <Center class="contetn_center_top" />-->
 <!--    </div>-->
     <div class="contetn_right">
-      <div class="right_item" v-for="index in 9">
+      <div class="right_item" v-for="index in 111">
         <span class="roomNo">房间号：{{index}}</span>
         <div class="temperature">
           <div class="pic"><img src="../../assets/img/1.png"  alt=""/></div>
@@ -215,6 +215,19 @@ export default {
       border-left: none;
       border-bottom: none;
     }
+  }
+  .contetn_right::-webkit-scrollbar {
+    width: 10px;
+  }
+  .contetn_right::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  .contetn_right::-webkit-scrollbar-thumb {
+    background: #4d67b6;
+    border-radius: 10px;
+  }
+  .contetn_right::-webkit-scrollbar-thumb:hover {
+    background: #3f4eb6;
   }
   .contetn_left,
   .contetn_right {
