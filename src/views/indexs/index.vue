@@ -109,24 +109,27 @@ export default {
   }
   .contetn_right {
     overflow-y: auto;
+    overflow-x: hidden;
     width: 70%;
-    margin: 30px;
-    height: 100%;
+    margin: 55px 30px;
+    height: calc(100% - 105px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    /*padding: 20px;*/
     flex-wrap: wrap;
     .right_item {
       cursor: pointer;
-      flex: 0 0 calc(33.33% - 40px);
+      flex: 0 0 calc(33.33% - 50px);
       /*width: calc(33.33% - 100px);*/
       height: 220px;
       text-align: center;
       padding: 10px;
       margin-bottom: 26px;
+        margin-left: 10px;
+      margin-right: 10px;
       /*background: #27fcff;*/
-      border: 1px solid #4d67b6;
+      border: 2px solid #4d67b6;
       border-radius: 5px;
       position: relative;
       display: flex;
@@ -202,10 +205,10 @@ export default {
     .right_item::before, .right_item::after {
       content: '';
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       background-color: transparent;
-      border: 1px solid #33b4d4;
+      border: 2px solid #33b4d4;
     }
     .right_item::before {
       top: 0;
@@ -228,17 +231,17 @@ export default {
     }
   }
   .contetn_right::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   .contetn_right::-webkit-scrollbar-track {
     background: #f1f1f1;
   }
   .contetn_right::-webkit-scrollbar-thumb {
-    background: #4d67b6;
+    background: #45cbff;
     border-radius: 10px;
   }
   .contetn_right::-webkit-scrollbar-thumb:hover {
-    background: #3f4eb6;
+    background: #4d67b6;
   }
   .contetn_left,
   .contetn_right {

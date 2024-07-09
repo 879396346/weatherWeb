@@ -14,6 +14,7 @@ import "vue-easytable/libs/theme-default/index.css";
 import  '@/assets/css/public.scss'
 import "@/assets/css/index.scss"
 import WebSocketPlugin from './utils/websocket';
+import { Loading } from 'element-ui';
 
 
 import * as filters from '@/directives/filters'
@@ -42,6 +43,8 @@ Vue.use(capsuleChart)
 Vue.use(WebSocketPlugin, {
   // 可以在这里传递WebSocket插件需要的选项
 });
+Vue.use(Loading.directive);
+
 // 全局数据过滤器
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 new Vue({
@@ -61,5 +64,5 @@ new Vue({
     onError(event) {
       // 出现错误时的处理
     }
-  }
+  },
 }).$mount("#app");

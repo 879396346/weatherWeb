@@ -23,6 +23,7 @@
     "uglify-js": "^3.17.4",
     "vue": "^2.7.13",
     "vue-easytable": "^2.21.5",
+    "vue-loading-overlay": "^6.0.4",
     "vue-router": "^3.6.5",
     "vue-seamless-scroll": "^1.1.23",
     "vuex": "^3.4.0"

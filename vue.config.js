@@ -110,13 +110,13 @@ module.exports = {
 
   devServer: {
     // 配置多个代理
-    hot: true,
-    open: true,
-    port: 8080,
-    proxy: {
-      target: '',
-      changeOrigin: true
-    }
+    // hot: true,
+    // open: true,
+    // port: 8080,
+    // proxy: {
+    //   target: '',
+    //   changeOrigin: true
+    // }
   },
   pluginOptions: {
   }
