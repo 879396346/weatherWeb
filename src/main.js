@@ -13,6 +13,7 @@ import Messages from './components/message/message'
 import "vue-easytable/libs/theme-default/index.css";
 import  '@/assets/css/public.scss'
 import "@/assets/css/index.scss"
+import WebSocketPlugin from './utils/websocket';
 
 
 import * as filters from '@/directives/filters'
@@ -38,10 +39,27 @@ Vue.use(borderBox13)
 Vue.use(borderBox8)
 Vue.use(digitalFlop)
 Vue.use(capsuleChart)
+Vue.use(WebSocketPlugin, {
+  // 可以在这里传递WebSocket插件需要的选项
+});
 // 全局数据过滤器
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  websocket: {
+    onMessage(event) {
+      // 处理消息
+    },
+    onOpen(event) {
+      // WebSocket连接打开时的处理
+    },
+    onClose(event) {
+      // WebSocket连接关闭时的处理
+    },
+    onError(event) {
+      // 出现错误时的处理
+    }
+  }
 }).$mount("#app");

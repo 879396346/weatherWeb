@@ -63,7 +63,8 @@ import RightTop from './right-top.vue'
 import RightCenterTop from './right-center-top.vue'
 import RightCenterBottom from './right-center-bottom.vue'
 import RightBottom from './right-bottom.vue'
-
+// 在你的组件中，你可以通过this.$websocket来发送消息、设置回调函数。这个插件提供了一个统一的接口来管理WebSocket连接，
+// 并且可以在Vue的生命周期钩子中注册和注销WebSocket的事件处理函数。
 export default {
   components: {
     LeftTop,
@@ -84,7 +85,9 @@ export default {
       return msg || 0
     },
   },
-  created() {},
+  created() {
+    this.$websocket
+  },
 
   mounted() {},
   methods: {},
