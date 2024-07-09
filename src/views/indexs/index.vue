@@ -4,35 +4,51 @@
       <div class="pagetab">
         <!-- <div class="item">实时监测</div> -->
       </div>
-      <ItemWrap class="contetn_left-top contetn_lr-item" title="室内温度">
+      <ItemWrap class="contetn_left-top contetn_lr-item" title="室内历史温度">
         <LeftTop />
       </ItemWrap>
-      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内湿度">
+      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内历史湿度">
         <LeftCenterTop />
       </ItemWrap>
-      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内CO2">
-        <LeftCenterBottom />
-      </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内tovc">
-        <LeftBottom />
-      </ItemWrap>
-    </div>
-    <div class="contetn_center">
-      <Center class="contetn_center_top" />
-    </div>
-    <div class="contetn_right">
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室外温度">
-        <RightTop />
-      </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内PM2.5">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内历史PM2.5">
         <RightCenterTop />
       </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内甲醛">
-        <RightCenterBottom />
-      </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内含湿量 ">
-        <RightBottom />
-      </ItemWrap>
+<!--      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内CO2">-->
+<!--        <LeftCenterBottom />-->
+<!--      </ItemWrap>-->
+<!--      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内tovc">-->
+<!--        <LeftBottom />-->
+<!--      </ItemWrap>-->
+    </div>
+<!--    <div class="contetn_center">-->
+<!--      <Center class="contetn_center_top" />-->
+<!--    </div>-->
+    <div class="contetn_right">
+      <div class="right_item" v-for="index in 9">
+        <span class="roomNo">房间号：{{index}}</span>
+        <div class="temperature">
+          <div class="pic"><img src="../../assets/img/1.png"  alt=""/></div>
+          <div class="value">36<span>°C</span></div>
+        </div>
+        <div class="humidity">
+          <div class="pic"><img src="../../assets/img/2.png"  alt=""/></div>
+          <div class="value">22<span>%</span></div>
+        </div>
+        <div class="pm">
+          <div class="pic"><img src="../../assets/img/3.png"  alt=""/></div>
+          <div class="value">33<span>μm</span></div>
+        </div>
+      </div>
+<!--      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室外温度">-->
+<!--        <RightTop />-->
+<!--      </ItemWrap>-->
+
+<!--      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内甲醛">-->
+<!--        <RightCenterBottom />-->
+<!--      </ItemWrap>-->
+<!--      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内含湿量 ">-->
+<!--        <RightBottom />-->
+<!--      </ItemWrap>-->
     </div>
   </div>
 </template>
@@ -77,9 +93,132 @@ export default {
 <style lang="scss" scoped>
 // 内容
 .contents {
+  .contetn_left {
+    width: 30%;
+  }
+  .contetn_right {
+    overflow-y: auto;
+    width: 70%;
+    margin: 30px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    flex-wrap: wrap;
+    .right_item {
+      cursor: pointer;
+      flex: 0 0 calc(33.33% - 40px);
+      /*width: calc(33.33% - 100px);*/
+      height: 220px;
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 26px;
+      /*background: #27fcff;*/
+      border: 1px solid #4d67b6;
+      border-radius: 5px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.5s ease;
+      .roomNo {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-weight: 600;
+      }
+      .temperature {
+        margin-left: 10px;
+        .pic {
+          margin-bottom: 20px;
+        }
+        .value {
+          margin-top: 20px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #4d67b6;
+        }
+        span {
+          margin-left: 5px;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+      .humidity {
+        .pic {
+          margin-bottom: 20px;
+        }
+        .value {
+          margin-top: 20px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #4d67b6;
+        }
+        span {
+          margin-left: 5px;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+      .pm {
+        margin-right: 10px;
+        .pic {
+          margin-bottom: 20px;
+        }
+        .value {
+          margin-top: 20px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #4d67b6;
+        }
+        span {
+          margin-left: 5px;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+      img {
+        /*filter: ;*/
+        width: 50px;
+        height: 50px;
+      }
+    }
+    .right_item:hover {
+      box-shadow: 0 8px 16px 0 #33b4d4; /* 鼠标悬停时添加阴影 */
+      transform: scale(1.01);
+    }
+    .right_item::before, .right_item::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: transparent;
+      border: 1px solid #33b4d4;
+    }
+    .right_item::before {
+      top: 0;
+      left: 0;
+      border-right: none;
+      border-bottom: none;
+    }
+    .right_item::after {
+      bottom: 0;
+      right: 0;
+      border-left: none;
+      border-top: none;
+    }
+    .right_item::after:nth-child(2) { /* 注意：这不是标准的CSS，仅用于说明 */
+      /* 实际上，我们需要再创建两个伪元素或使用其他方法 */
+      top: 0;
+      right: 0;
+      border-left: none;
+      border-bottom: none;
+    }
+  }
   .contetn_left,
   .contetn_right {
-    width: 540px;
+    /*width: 540px;*/
     box-sizing: border-box;
     // padding: 16px 0;
   }
@@ -109,8 +248,7 @@ export default {
   }
 
   //左边 右边 结构一样
-  .contetn_left,
-  .contetn_right {
+  .contetn_left {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

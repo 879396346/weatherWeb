@@ -21,7 +21,7 @@
       </p>
     </div>
     <div v-else>
-      <p>Loading...</p>
+      <p>加载中...</p>
     </div>
   </div>
 </template>
