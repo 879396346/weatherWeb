@@ -17,7 +17,7 @@
           <div class="d-flex jc-center">
             <div class="title">
               <span class="title-time">{{ dateDay }}</span>
-              <span class="title-text">空气质量监测</span>
+              <span class="title-text">xxx酒店房间空气质量监测</span>
               <span class="title-date">{{ dateYear }}</span>
             </div>
           </div>

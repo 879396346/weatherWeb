@@ -1,5 +1,5 @@
 <template>
-  <Echart id="leftTop" :options="options" v-if="pageflag" ref="charts" />
+  <Echart id="leftTop" :options="options" v-if="pageflag" ref="charts" v-loading="loading"/>
   <Reacquire v-else @onclick="getData" line-height="150px">
     重新获取
   </Reacquire>
@@ -7,6 +7,12 @@
 
 <script>
 export default {
+  props: {
+    historyTemp: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       options: {
@@ -76,6 +82,15 @@ export default {
       },
       pageflag: true,
       timer: null,
+      loading: false
+    }
+  },
+  watch: {
+    historyTemp: {
+      handler(val) {
+        this.loading = true
+        this.getData()
+      }
     }
   },
   created() {
@@ -94,6 +109,8 @@ export default {
     },
     getData() {
       this.pageflag = true
+      this.options.series.data = this.historyTemp
+      this.loading = false
     },
   },
 }
