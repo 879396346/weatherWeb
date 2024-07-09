@@ -5,13 +5,13 @@
         <!-- <div class="item">实时监测</div> -->
       </div>
       <ItemWrap class="contetn_left-top contetn_lr-item" title="室内历史温度">
-        <LeftTop />
+        <LeftTop :historyTemp="historyTemp"/>
       </ItemWrap>
       <ItemWrap class="contetn_left-center contetn_lr-item" title="室内历史湿度">
-        <LeftCenterTop />
+        <LeftCenterTop :historyHumi="historyHumi"/>
       </ItemWrap>
       <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内历史PM2.5">
-        <RightCenterTop />
+        <RightCenterTop :historyPm="historyPm"/>
       </ItemWrap>
 <!--      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内CO2">-->
 <!--        <LeftCenterBottom />-->
@@ -24,7 +24,7 @@
 <!--      <Center class="contetn_center_top" />-->
 <!--    </div>-->
     <div class="contetn_right">
-      <div class="right_item" v-for="index in 111">
+      <div class="right_item" v-for="index in 111" @click="getHistory">
         <span class="roomNo">房间号：{{index}}</span>
         <div class="temperature">
           <div class="pic"><img src="../../assets/img/1.png"  alt=""/></div>
@@ -78,7 +78,11 @@ export default {
     RightBottom,
   },
   data() {
-    return {}
+    return {
+      historyTemp: [],
+      historyHumi: [],
+      historyPm: []
+    }
   },
   filters: {
     numsFilter(msg) {
@@ -86,11 +90,15 @@ export default {
     },
   },
   created() {
-    this.$websocket
+    // this.$websocket
   },
 
   mounted() {},
-  methods: {},
+  methods: {
+    getHistory() {
+      this.historyTemp = [1,2]
+    }
+  },
 }
 </script>
 <style lang="scss" scoped>
