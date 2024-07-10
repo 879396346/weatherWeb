@@ -95,6 +95,11 @@ export default {
   },
   created() {
     // this.$websocket
+    this.$axios.get('/device/getAllRoomAirParam').then(res=>{
+      console.log(res.data);
+      },err=>{
+      console.log(err);
+    })
   },
 
   mounted() {},

@@ -17,12 +17,13 @@ import WebSocketPlugin from './utils/websocket';
 import { Loading } from 'element-ui';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import axios from 'axios'
 
 import * as filters from '@/directives/filters'
 
 require('./mock/mock')//是否使用mock
 Vue.config.productionTip = false;
-
+Vue.prototype.$axios = axios
 // 自定义组件
 Vue.component("Echart",Echart)
 Vue.component("ItemWrap",ItemWrap)
