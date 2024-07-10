@@ -135,23 +135,30 @@
 .scale-wrap {
   .pagetab {
     position: absolute;
-    top: -35px;
+    top: 0;
+    left: 40%;
     display: flex;
-
     .item {
-      width: 130px;
+      width: 120px;
       height: 36px;
-      border-radius: 18px 0px 0px 18px;
-      color: #00fbf8;
+      border-radius: 18px;
+      color: #2930b6;
       text-indent: 26px;
       line-height: 36px;
-      font-size: 16px;
+      font-size: 20px;
       margin-right: 20px;
-      background: linear-gradient(
-        to right,
-        rgba(76, 245, 255, 0.5),
-        rgba(76, 245, 255, 0)
-      );
+      text-align: center;
+      font-weight: 700;
+      background: linear-gradient(to right, rgba(76, 245, 255, 0.5), rgba(76, 245, 255, 1), rgba(76, 245, 255, 0.5));;
+      //background: linear-gradient(to right, rgba(76, 245, 255, 0.5), rgba(76, 245, 255, 0));
+      position: relative;
+      img {
+        position: absolute;
+        left: 10px;
+        top: 3px;
+        width: 30px;
+        height: 30px;
+      }
     }
   }
 }

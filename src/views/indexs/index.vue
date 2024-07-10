@@ -2,15 +2,15 @@
   <div class="contents">
     <div class="contetn_left">
       <div class="pagetab">
-        <!-- <div class="item">实时监测</div> -->
+         <div class="item"><img src="../../assets/img/5.png" />{{ roomNo }}</div>
       </div>
-      <ItemWrap class="contetn_left-top contetn_lr-item" title="室内历史温度">
+      <ItemWrap class="contetn_left-top contetn_lr-item" title="室内历史温度" v-loading="loading1">
         <LeftTop :historyTemp="historyTemp"/>
       </ItemWrap>
-      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内历史湿度">
+      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内历史湿度" v-loading="loading2">
         <LeftCenterTop :historyHumi="historyHumi"/>
       </ItemWrap>
-      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内历史PM2.5">
+      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内历史PM2.5" v-loading="loading3">
         <RightCenterTop :historyPm="historyPm"/>
       </ItemWrap>
 <!--      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内CO2">-->
@@ -24,7 +24,7 @@
 <!--      <Center class="contetn_center_top" />-->
 <!--    </div>-->
     <div class="contetn_right">
-      <div class="right_item" v-for="index in 111" @click="getHistory">
+      <div class="right_item" v-for="index in 111" @click="getHistory(index)">
         <span class="roomNo">房间号：{{index}}</span>
         <div class="temperature">
           <div class="pic"><img src="../../assets/img/1.png"  alt=""/></div>
@@ -81,7 +81,11 @@ export default {
     return {
       historyTemp: [],
       historyHumi: [],
-      historyPm: []
+      historyPm: [],
+      loading1: false,
+      loading2: false,
+      loading3: false,
+      roomNo: 1111
     }
   },
   filters: {
@@ -95,8 +99,17 @@ export default {
 
   mounted() {},
   methods: {
-    getHistory() {
-      this.historyTemp = [1,2]
+    getHistory(val) {
+      this.roomNo = val
+      this.historyTemp = [1,2,44,55,66,77,88,99]
+      this.loading1 = true
+      this.loading2 = true
+      this.loading3 = true
+      setTimeout(() => {
+        this.loading1 = false
+        this.loading2 = false
+        this.loading3 = false
+      }, 1000)
     }
   },
 }
@@ -231,7 +244,7 @@ export default {
     }
   }
   .contetn_right::-webkit-scrollbar {
-    width: 5px;
+    width: 10px;
   }
   .contetn_right::-webkit-scrollbar-track {
     background: #f1f1f1;
@@ -280,6 +293,17 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     position: relative;
+  }
+  ::v-deep .el-loading-mask {
+    background-color: transparent !important;
+    /*opacity: 0.2;*/
+    /*border-radius: 5px;*/
+    /*width: 90%;*/
+    /*height: 90%;*/
+    .path {
+      /*fill: #00eaff;*/
+      stroke: #fff;
+    }
   }
 }
 
