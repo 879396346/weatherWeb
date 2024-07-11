@@ -134,7 +134,6 @@ export default {
           })
         });
         this.allData = res.data.data;
-        this.allData.push({},{},{},{},{},{},{})
         this.getHistory(res.data.data[0])
       }
     },err=>{
@@ -180,8 +179,10 @@ export default {
     margin: 55px 30px;
     height: calc(100% - 105px);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /*justify-content: space-between;*/
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
     /*padding: 20px;*/
     flex-wrap: wrap;
     /*right_item:nth-child() {*/
