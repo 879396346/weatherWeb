@@ -10,45 +10,46 @@ const CancelToken = axios.CancelToken
 export { baseUrl }
 // axios.defaults.withCredentials = true;
 // 添加请求拦截器
-axios.interceptors.request.use(
-  function (config) {
-    // 在发送请求之前做些什么 传token
-    let token = localStorage.getItem('token')
-    config.headers.common['Content-Type'] = 'application/json;charset=utf-8'
-    config.headers.common['token'] = token //Authorization
-    return config
-  },
-  function (error) {
-    // 对请求错误做些什么
-    console.log(error)
-    return Promise.reject(error)
-  }
-)
+// axios.interceptors.request.use(
+//   function (config) {
+//     // 在发送请求之前做些什么 传token
+//     let token = localStorage.getItem('token')
+//     config.headers.common['Content-Type'] = 'application/json;charset=utf-8'
+//     config.headers.common['token'] = token //Authorization
+//     return config
+//   },
+//   function (error) {
+//     // 对请求错误做些什么
+//     console.log(error)
+//     return Promise.reject(error)
+//   }
+// )
 /**
  * @响应拦截
  */
-axios.interceptors.response.use(
-  (response) => {
-    if (response.status !== 200) {
-      return Promise.reject(response)
-    }
-    /**
-     * @code 登录过期 token验证失败 根据后端调
-     */
-    if (response.data.code == UtilVar.code) {
-      // router.push("/login")
-    }
-    return response.data
-  },
-  (error) => {
-    console.error(error)
-    let err = {
-      success: false,
-      msg: '未知异常，请联系管理员！',
-    }
-    return Promise.reject(err)
-  }
-)
+// axios.interceptors.response.use(
+//   (response) => {
+//     console.log(response)
+//     if (response.status !== 200) {
+//       return Promise.reject(response)
+//     }
+//     /**
+//      * @code 登录过期 token验证失败 根据后端调
+//      */
+//     if (response.data.code == UtilVar.code) {
+//       // router.push("/login")
+//     }
+//     return response.data
+//   },
+//   (error) => {
+//     console.error(error)
+//     let err = {
+//       success: false,
+//       msg: '未知异常，请联系管理员！',
+//     }
+//     return Promise.reject(err)
+//   }
+// )
 
 let configs_ENC = {
   headers: { enc: UtilVar.ENC },

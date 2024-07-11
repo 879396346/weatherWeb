@@ -1,7 +1,8 @@
 
 let UtilVar = {
     ENC: false, //返回结果是否加密
-    baseUrl: `http://localhost:8888`,
+    // baseUrl: `http://localhost:8888`,
+    baseUrl: `/api`,
     code: 401,
 }
 const runtimeType = {

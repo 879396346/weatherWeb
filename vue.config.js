@@ -110,9 +110,9 @@ module.exports = {
 
   devServer: {
     // 配置多个代理
-    hot: true,
+    // hot: true,
     // open: true,
-    port: 8080,
+    // port: 8080,
     proxy: {
       '/api': {
         target: 'http://ak27155lt064.vicp.fun',

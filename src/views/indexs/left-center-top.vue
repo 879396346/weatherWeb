@@ -8,6 +8,12 @@
 <script>
 import * as echarts from 'echarts'
 export default {
+  props: {
+    historyHumi: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       options: {
@@ -22,7 +28,7 @@ export default {
           containLabel: true,
         },
         xAxis: {
-          data: ['01/12', '01/12', '01/12', '01/12', '01/12', '01/12', '01/12'],
+          data: ['0时', '1时', '2时', '3时', '4时', '5时', '6时', '7时', '8时', '9时', '10时', '11时'],
           axisLabel: {
             color: '#ccc',
           },
@@ -39,6 +45,8 @@ export default {
           },
         },
         yAxis: {
+          max: 100,
+          min: 0,
           axisLine: {
             show: false,
           },
@@ -75,12 +83,20 @@ export default {
               borderRadius: [10, 10, 0, 0],
             },
 
-            data: [220, 182, 191, 234, 1000, 566, 666],
+            data: [],
           },
         ],
       },
       pageflag: true,
       timer: null,
+    }
+  },
+  watch: {
+    historyHumi: {
+      handler(val) {
+        this.options.series[0].data = val
+        // this.getData()
+      }
     }
   },
   created() {

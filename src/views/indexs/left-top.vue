@@ -30,7 +30,7 @@ export default {
           {
             type: 'category',
             boundaryGap: false,
-            data: ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8'],
+            data: ['0时', '1时', '2时', '3时', '4时', '5时', '6时', '7时', '8时', '9时', '10时', '11时'],
             axisLabel: {
               textStyle: {
                 color: '#fff',
@@ -76,7 +76,7 @@ export default {
             lineStyle: {
               color: '#91b6f3',
             },
-            data: [20, 25, 20, 30, 30, 26, 29, 25],
+            data: [],
           },
         ],
       },
@@ -87,7 +87,6 @@ export default {
   watch: {
     historyTemp: {
       handler(val) {
-        console.log(val)
         this.options.series[0].data = val
         // this.getData()
       }

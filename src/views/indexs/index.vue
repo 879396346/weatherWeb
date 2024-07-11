@@ -11,7 +11,7 @@
         <LeftCenterTop :historyHumi="historyHumi"/>
       </ItemWrap>
       <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室内历史PM2.5" v-loading="loading3">
-        <RightCenterTop :historyPm="historyPm"/>
+        <RightCenterTop :historyPM="historyPM"/>
       </ItemWrap>
 <!--      <ItemWrap class="contetn_left-center contetn_lr-item" title="室内CO2">-->
 <!--        <LeftCenterBottom />-->
@@ -24,19 +24,20 @@
 <!--      <Center class="contetn_center_top" />-->
 <!--    </div>-->
     <div class="contetn_right">
-      <div class="right_item" v-for="index in 111" @click="getHistory(index)">
-        <span class="roomNo">房间号：{{index}}</span>
+      <div class="right_item" v-for="item in allData"  :key="item.id" @click="getHistory(item)">
+        <span class="floorNo">楼层：{{item.floor}}</span>
+        <span class="roomNo">房间号：{{item.roomNumber}}</span>
         <div class="temperature">
           <div class="pic"><img src="../../assets/img/1.png"  alt=""/></div>
-          <div class="value">36<span>°C</span></div>
+          <div class="value">{{ item.temperature }}<span>°C</span></div>
         </div>
         <div class="humidity">
           <div class="pic"><img src="../../assets/img/2.png"  alt=""/></div>
-          <div class="value">22<span>%</span></div>
+          <div class="value">{{ item.humidity }}<span>%</span></div>
         </div>
         <div class="pm">
           <div class="pic"><img src="../../assets/img/3.png"  alt=""/></div>
-          <div class="value">33<span>μm</span></div>
+          <div class="value">{{ item.pm25 }}<span>μm</span></div>
         </div>
       </div>
 <!--      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室外温度">-->
@@ -63,6 +64,7 @@ import RightTop from './right-top.vue'
 import RightCenterTop from './right-center-top.vue'
 import RightCenterBottom from './right-center-bottom.vue'
 import RightBottom from './right-bottom.vue'
+import {GET} from "../../api/api";
 // 在你的组件中，你可以通过this.$websocket来发送消息、设置回调函数。这个插件提供了一个统一的接口来管理WebSocket连接，
 // 并且可以在Vue的生命周期钩子中注册和注销WebSocket的事件处理函数。
 export default {
@@ -81,11 +83,38 @@ export default {
     return {
       historyTemp: [],
       historyHumi: [],
-      historyPm: [],
+      historyPM: [],
       loading1: false,
       loading2: false,
       loading3: false,
-      roomNo: 1111
+      roomNo: '',
+      allData: [],
+      floorMap: [
+        {
+          id: 1,
+          value: '一'
+        },
+        {
+          id: 2,
+          value: '二'
+        },
+        {
+          id: 3,
+          value: '三'
+        },
+        {
+          id: 4,
+          value: '四'
+        },
+        {
+          id: 5,
+          value: '五'
+        },
+        {
+          id: 6,
+          value: '六'
+        },
+      ]
     }
   },
   filters: {
@@ -93,28 +122,47 @@ export default {
       return msg || 0
     },
   },
-  created() {
+  async created() {
     // this.$websocket
-    this.$axios.get('/device/getAllRoomAirParam').then(res=>{
-      console.log(res.data);
-      },err=>{
+    await GET('/device/getAllRoomAirParam').then(res=>{
+      if (res.data.success && res.data.data.length) {
+        res.data.data.forEach(item => {
+          this.floorMap.forEach(item1 => {
+            if (Number(item.floor) === item1.id) {
+              item.floor = item1.value
+            }
+          })
+        });
+        this.allData = res.data.data;
+        this.allData.push({},{},{},{},{},{},{})
+        this.getHistory(res.data.data[0])
+      }
+    },err=>{
       console.log(err);
     })
   },
-
   mounted() {},
   methods: {
     getHistory(val) {
-      this.roomNo = val
-      this.historyTemp = [1,2,44,55,66,77,88,99]
-      this.loading1 = true
-      this.loading2 = true
-      this.loading3 = true
-      setTimeout(() => {
-        this.loading1 = false
-        this.loading2 = false
-        this.loading3 = false
-      }, 1000)
+      this.loading1 = true;
+      this.loading2 = true;
+      this.loading3 = true;
+      this.roomNo = val.roomNumber;
+      GET(`device/getTodayOneRoomAirParam?number=${val.deviceNumber}`).then(res=>{
+        if (res.data.success) {
+          this.historyTemp = res.data.data.temperature;
+          this.historyHumi = res.data.data.humidity;
+          this.historyPM = res.data.data.pm25;
+          this.loading1 = false;
+          this.loading2 = false;
+          this.loading3 = false;
+        }
+      },err=>{
+        console.log(err);
+        this.loading1 = false;
+        this.loading2 = false;
+        this.loading3 = false;
+      });
     }
   },
 }
@@ -154,10 +202,16 @@ export default {
       justify-content: space-between;
       align-items: center;
       transition: transform 0.5s ease;
-      .roomNo {
+      .floorNo {
         position: absolute;
         top: 20px;
         left: 20px;
+        font-weight: 600;
+      }
+      .roomNo {
+        position: absolute;
+        top: 20px;
+        right: 20px;
         font-weight: 600;
       }
       .temperature {
