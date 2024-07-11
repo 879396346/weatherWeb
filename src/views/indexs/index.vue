@@ -24,7 +24,7 @@
 <!--      <Center class="contetn_center_top" />-->
 <!--    </div>-->
     <div class="contetn_right">
-      <div class="right_item" v-for="item in allData"  :key="item.id" @click="getHistory(item)">
+      <div class="right_item" v-for="item in allData"  :key="item.id" @click="getHistory(item)" v-loading="loading4">
         <span class="floorNo">楼层：{{item.floor}}</span>
         <span class="roomNo">房间号：{{item.roomNumber}}</span>
         <div class="temperature">
@@ -87,6 +87,7 @@ export default {
       loading1: false,
       loading2: false,
       loading3: false,
+      loading4: false,
       roomNo: '',
       allData: [],
       floorMap: [
@@ -114,7 +115,8 @@ export default {
           id: 6,
           value: '六'
         },
-      ]
+      ],
+      ws: null,
     }
   },
   filters: {
@@ -123,7 +125,6 @@ export default {
     },
   },
   async created() {
-    // this.$websocket
     await GET('/device/getAllRoomAirParam').then(res=>{
       if (res.data.success && res.data.data.length) {
         res.data.data.forEach(item => {
@@ -138,9 +139,15 @@ export default {
       }
     },err=>{
       console.log(err);
-    })
+    });
+    this.connect();
   },
   mounted() {},
+  beforeDestroy() {
+    if (this.ws) {
+      this.ws.close();
+    }
+  },
   methods: {
     getHistory(val) {
       this.loading1 = true;
@@ -162,7 +169,58 @@ export default {
         this.loading2 = false;
         this.loading3 = false;
       });
-    }
+    },
+    connect() {
+      // 替换为你的WebSocket服务地址
+      this.ws = new WebSocket('ws://ak27155lt064.vicp.fun/websocket/1');
+      this.ws.onopen = () => {
+        console.log('WebSocket连接已打开');
+        // 连接打开后，可以发送消息
+        this.ws.send(JSON.stringify(
+          {
+            type: 'heart_beat',
+            userId: '1'
+          }
+        ));
+      };
+      this.ws.onmessage = (event) => {
+        // console.log('收到服务器消息:', event.data);
+        if (event.data !== 'pong') {
+          if(JSON.parse(event.data).type === 'air_param') {
+            this.loading4 = true;
+            JSON.parse(JSON.parse(event.data).msg).forEach(item => {
+              this.floorMap.forEach(item1 => {
+                if (Number(item.floor) === item1.id) {
+                  item.floor = item1.value
+                }
+              })
+            });
+            this.allData = JSON.parse(JSON.parse(event.data).msg);
+            this.loading4 = false;
+          }
+        }
+        // 处理接收到的数据
+      };
+      this.ws.onerror = (error) => {
+        console.error('WebSocket错误:', error);
+      };
+      this.ws.onclose = () => {
+        console.log('WebSocket连接已关闭');
+        // 自动重连逻辑等
+        const interval = setInterval(() => {
+          if (this.ws.readyState === WebSocket.OPEN) {
+            this.ws.send(JSON.stringify(
+              {
+                type: 'heart_beat',
+                userId: '1'
+              }
+            ));
+          } else {
+            clearInterval(interval);
+          }
+        }, 30000); // 每30秒发送一次心跳
+      };
+    },
   },
 }
 </script>
@@ -219,6 +277,7 @@ export default {
         font-weight: 600;
       }
       .temperature {
+        margin-top: 40px;
         margin-left: 10px;
         .pic {
           margin-bottom: 20px;
@@ -236,6 +295,7 @@ export default {
         }
       }
       .humidity {
+        margin-top: 40px;
         .pic {
           margin-bottom: 20px;
         }
@@ -252,6 +312,7 @@ export default {
         }
       }
       .pm {
+        margin-top: 40px;
         margin-right: 10px;
         .pic {
           margin-bottom: 20px;

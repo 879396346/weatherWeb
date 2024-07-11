@@ -53,18 +53,18 @@ new Vue({
   router,
   store,
   render: h => h(App),
-  websocket: {
-    onMessage(event) {
-      // 处理消息
-    },
-    onOpen(event) {
-      // WebSocket连接打开时的处理
-    },
-    onClose(event) {
-      // WebSocket连接关闭时的处理
-    },
-    onError(event) {
-      // 出现错误时的处理
-    }
-  },
+  // websocket: {
+  //   onMessage(event) {
+  //     // 处理消息
+  //   },
+  //   onOpen(event) {
+  //     // WebSocket连接打开时的处理
+  //   },
+  //   onClose(event) {
+  //     // WebSocket连接关闭时的处理
+  //   },
+  //   onError(event) {
+  //     // 出现错误时的处理
+  //   }
+  // },
 }).$mount("#app");

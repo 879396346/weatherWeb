@@ -16,6 +16,10 @@ export default {
   data() {
     return {
       options: {
+        // title: {
+        //   text: '222',
+        //   textAlign: 'center'
+        // },
         tooltip: {
           trigger: 'axis',
         },
@@ -47,6 +51,9 @@ export default {
         yAxis: [
           {
             name: '单位：°C',
+            nameTextStyle: {
+              color: '#fff'
+            },
             type: 'value',
             max: 40,
             min: 0,
