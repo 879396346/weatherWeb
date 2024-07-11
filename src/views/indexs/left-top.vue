@@ -46,8 +46,9 @@ export default {
         ],
         yAxis: [
           {
+            name: '单位：°C',
             type: 'value',
-            max: 100,
+            max: 40,
             min: 0,
             axisTick: {
               show: false,

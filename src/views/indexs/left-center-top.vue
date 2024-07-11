@@ -45,8 +45,9 @@ export default {
           },
         },
         yAxis: {
-          max: 100,
-          min: 0,
+          name: '单位：%RH',
+          max: 70,
+          min: 30,
           axisLine: {
             show: false,
           },

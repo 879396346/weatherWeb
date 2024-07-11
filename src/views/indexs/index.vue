@@ -33,11 +33,11 @@
         </div>
         <div class="humidity">
           <div class="pic"><img src="../../assets/img/2.png"  alt=""/></div>
-          <div class="value">{{ item.humidity }}<span>%</span></div>
+          <div class="value">{{ item.humidity }}<span>%RH</span></div>
         </div>
         <div class="pm">
           <div class="pic"><img src="../../assets/img/3.png"  alt=""/></div>
-          <div class="value">{{ item.pm25 }}<span>μm</span></div>
+          <div class="value">{{ item.pm25 }}<span>μg/m³</span></div>
         </div>
       </div>
 <!--      <ItemWrap class="contetn_left-bottom contetn_lr-item" title="室外温度">-->
@@ -184,6 +184,9 @@ export default {
     align-items: center;
     /*padding: 20px;*/
     flex-wrap: wrap;
+    /*right_item:nth-child() {*/
+    /*  justify-self: start;*/
+    /*}*/
     .right_item {
       cursor: pointer;
       flex: 0 0 calc(33.33% - 50px);
@@ -192,7 +195,7 @@ export default {
       text-align: center;
       padding: 10px;
       margin-bottom: 26px;
-        margin-left: 10px;
+      margin-left: 10px;
       margin-right: 10px;
       /*background: #27fcff;*/
       border: 2px solid #4d67b6;

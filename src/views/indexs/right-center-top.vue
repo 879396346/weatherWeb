@@ -46,8 +46,12 @@ export default {
         ],
         yAxis: [
           {
+            name: '单位：μg/m³',
+            nameTextStyle: {
+              color: '#ff0000' // 红色
+            },
             type: 'value',
-            max: 100,
+            max: 80,
             min: 0,
             axisTick: {
               show: false,
