@@ -127,13 +127,13 @@ export default {
   async created() {
     await GET('/device/getAllRoomAirParam').then(res=>{
       if (res.data.success && res.data.data.length) {
-        res.data.data.forEach(item => {
-          this.floorMap.forEach(item1 => {
-            if (Number(item.floor) === item1.id) {
-              item.floor = item1.value
-            }
-          })
-        });
+        // res.data.data.forEach(item => {
+        //   this.floorMap.forEach(item1 => {
+        //     if (Number(item.floor) === item1.id) {
+        //       item.floor = item1.value
+        //     }
+        //   })
+        // });
         this.allData = res.data.data;
         this.getHistory(res.data.data[0])
       }
@@ -279,17 +279,20 @@ export default {
       .temperature {
         margin-top: 40px;
         margin-left: 10px;
+        /*margin-right: 10px;*/
         .pic {
+          width: 100%;
           margin-bottom: 20px;
         }
         .value {
+          width: 80px;
           margin-top: 20px;
           font-size: 20px;
           font-weight: 700;
           color: #4d67b6;
         }
         span {
-          margin-left: 5px;
+          margin-left: 3px;
           font-size: 14px;
           color: #fff;
         }
@@ -300,31 +303,34 @@ export default {
           margin-bottom: 20px;
         }
         .value {
+          width: 80px;
           margin-top: 20px;
           font-size: 20px;
           font-weight: 700;
           color: #4d67b6;
         }
         span {
-          margin-left: 5px;
+          margin-left: 3px;
           font-size: 14px;
           color: #fff;
         }
       }
       .pm {
         margin-top: 40px;
-        margin-right: 10px;
+        margin-right: 12px;
+        /*margin-left: 10px;*/
         .pic {
           margin-bottom: 20px;
         }
         .value {
+          width: 80px;
           margin-top: 20px;
           font-size: 20px;
           font-weight: 700;
           color: #4d67b6;
         }
         span {
-          margin-left: 5px;
+          margin-left: 3px;
           font-size: 14px;
           color: #fff;
         }
